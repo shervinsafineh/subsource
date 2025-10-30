@@ -8,5 +8,6 @@ import { Secrets } from '../other/secrets';
 export class Api {
   constructor(private http: HttpClient) {}
 
-  apiKey = Secrets.apiKey;
+  baseUrl = 'https://api.subsource.net/api/v1';
+  authString = `X-API-Key: ${Secrets.apiKey}`;
 }
