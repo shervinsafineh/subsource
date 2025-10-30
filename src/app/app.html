@@ -1,19 +1,20 @@
 <div class="main">
-  <div class="logo"><img [src]="logoData" alt="SubSource Logo" /></div>
+  <div class="logo"><img [src]="logoData" alt="SubSource Logo" height="60px" /></div>
 
   <div class="flex-main">
     <div class="search-type">
       <div class="radio-div">
         <p-radiobutton value="title" [(ngModel)]="searchType" inputId="titleSearchType" />
-        <label for="titleSearchType">Search by title</label>
+        <label for="titleSearchType">Search by Title</label>
       </div>
       <div class="radio-div">
         <p-radiobutton value="user" [(ngModel)]="searchType" inputId="userSearchType" />
-        <label for="userSearchType">Search by user</label>
+        <label for="userSearchType">Search by User</label>
       </div>
+      <div style="margin-top: 20px;"><p-button severity="contrast" label="Start Over" (onClick)="refresh()"></p-button></div>
     </div>
 
-    <hr />
+    <hr class="vertical-separator" />
 
     <div class="second-col">
       @if(searchType === 'title'){
@@ -29,9 +30,7 @@
               type="text"
               pInputText
               [(ngModel)]="titleSearchQuery"
-              [placeholder]="
-                'Enter ' + (titleSearchType === 'text' ? 'name' : 'IMDb ID/link') + ' *'
-              "
+              [placeholder]="(titleSearchType === 'text' ? 'Name' : 'IMDb ID/Link') + ' *'"
               [required]="true"
             />
           </p-iconfield>
@@ -85,6 +84,69 @@
       } @else {}
     </div>
 
-    <hr />
+    <hr class="vertical-separator" />
+
+    @if(searchType === 'title'){
+
+    <div class="scrollable-collection">
+      @if(!searchStarted){<span style="opacity: 0.5">Search to see the results here</span>}
+      @if(searchStarted && resultTitles.length === 0){<strong>No titles found</strong>}
+      @if(searchStarted && resultTitles.length > 0){ @for(title of resultTitles; track
+      title.movieId; let i=$index,c=$count){
+      <div class="result-title" (click)="movieId = title.movieId">
+        <div class="title-poster">
+          <img [src]="title.posters.small" [alt]="title.title" style="width: 50px" />
+        </div>
+        <div class="title-id">
+          <div class="title-id-title" [title]="title.title + ' (' + title.releaseYear + ')'">
+            <strong>{{ title.title }} ({{ title.releaseYear }})</strong>
+          </div>
+          <div style="opacity: 0.8">
+            {{ title.type === 'tvseries' ? 'TV Series' : 'Movie' }}@if(title.type==='tvseries'){ /
+            Season: {{ title.season > 0 ? title.season : 'Extras' }} }
+          </div>
+          <div class="title-urls">
+            @if(title.tmdbId){
+            <div>
+              <a
+                href="https://www.themoviedb.org/movie/{{ title.tmdbId }}"
+                target="_blank"
+                (click)="stopPropagation($event)"
+                ><img
+                  src="https://www.themoviedb.org/assets/2/v4/logos/v2/blue_square_1-5bdc75aaebeb75dc7ae79426ddd9be3b2be1e342510f8202baf6bffa71d7f5c4.svg"
+                  alt="TMDb Logo"
+                  style="width: 40px"
+              /></a>
+            </div>
+            } @if(title.imdbId){
+            <div>
+              <a
+                href="https://www.imdb.com/title/{{ title.imdbId }}"
+                target="_blank"
+                (click)="stopPropagation($event)"
+                ><img
+                  src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/IMDB_Logo_2016.svg/1280px-IMDB_Logo_2016.svg.png"
+                  alt="IMDb Logo"
+                  style="width: 40px"
+              /></a>
+            </div>
+            } @if(movieId === title.movieId){
+            <div style="margin-left: auto">
+              <img
+                src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/74/Eo_circle_cyan_checkmark.svg/768px-Eo_circle_cyan_checkmark.svg.png"
+                alt="Checked Icon"
+                width="20px"
+              />
+            </div>
+            }
+          </div>
+        </div>
+      </div>
+
+      @if(i < c - 1){
+      <hr style="margin-top: 0px; margin-bottom: 5px; opacity: 0.2; width: 95%" />
+      } } }
+    </div>
+    }@else{}
   </div>
 </div>

@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Secrets } from '../other/secrets';
+import { Observable } from 'rxjs';
+import { Title } from '../models/title';
 
 @Injectable({
   providedIn: 'root',
@@ -18,14 +20,17 @@ export class Api {
     year?: number,
     type?: string,
     season?: number
-  ) {
+  ): Observable<{ success: boolean; data: Title[] }> {
     let url = `${this.baseUrl}/movies/search?searchType=${searchType}`;
     if (q) url += `&q=${q}`;
     if (imdb) url += `&imdb=${imdb}`;
     if (year) url += `&year=${year}`;
     if (type) url += `&type=${type}`;
     if (season) url += `&season=${season}`;
-    return this.http.get(url, { headers: this.headers });
+    return this.http.get(url, { headers: this.headers }) as Observable<{
+      success: boolean;
+      data: Title[];
+    }>;
   }
 
   getTitleById(id: number) {

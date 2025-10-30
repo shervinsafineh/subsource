@@ -28,32 +28,29 @@ export class App {
   ];
   titleType = 'all';
   seasonNumber: number | null = null;
+  searchStarted = false;
+  resultTitles: any[] = [];
+  movieId: number | null = null;
 
   searchByTitle() {
-    if (this.titleSearchType === 'text') {
-      this.apiService
-        .searchTitle(
-          this.titleSearchType,
-          this.titleSearchQuery,
-          undefined,
-          this.titleYear ? this.titleYear : undefined,
-          this.titleType !== 'all' ? this.titleType : undefined,
-          this.titleType !== 'movie'
-            ? this.seasonNumber
-              ? this.seasonNumber
-              : undefined
-            : undefined
-        )
-        .subscribe((response) => {
-          console.log(response);
-        });
-    } else {
-      this.apiService
-        .searchTitle(this.titleSearchType, undefined, this.titleSearchQuery)
-        .subscribe((response) => {
-          console.log(response);
-        });
-    }
+    this.resultTitles = [];
+    this.searchStarted = true;
+    this.apiService
+      .searchTitle(
+        this.titleSearchType,
+        this.titleSearchType === 'text' ? this.titleSearchQuery : undefined,
+        this.titleSearchType === 'imdb' ? this.titleSearchQuery : undefined,
+        this.titleYear ? this.titleYear : undefined,
+        this.titleType !== 'all' ? this.titleType : undefined,
+        this.titleType !== 'movie' ? (this.seasonNumber ? this.seasonNumber : undefined) : undefined
+      )
+      .subscribe((response) => {
+        this.resultTitles = response.data;
+
+        for (const title of this.resultTitles) {
+          title.selected = false;
+        }
+      });
   }
 
   resetSearchByTitle() {
@@ -72,5 +69,13 @@ export class App {
       this.titleType !== 'all' ||
       this.seasonNumber !== null
     );
+  }
+
+  stopPropagation(event: Event) {
+    event.stopPropagation();
+  }
+
+  refresh() {
+    window.location.reload();
   }
 }
