@@ -86,3 +86,13 @@ hr {
   background-color: transparent;
   cursor: pointer;
 }
+
+.search-btns {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+
+.second-col {
+  max-width: 600px;
+}

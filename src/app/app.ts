@@ -32,7 +32,18 @@ export class App {
   searchByTitle() {
     if (this.titleSearchType === 'text') {
       this.apiService
-        .searchTitle(this.titleSearchType, this.titleSearchQuery)
+        .searchTitle(
+          this.titleSearchType,
+          this.titleSearchQuery,
+          undefined,
+          this.titleYear ? this.titleYear : undefined,
+          this.titleType !== 'all' ? this.titleType : undefined,
+          this.titleType !== 'movie'
+            ? this.seasonNumber
+              ? this.seasonNumber
+              : undefined
+            : undefined
+        )
         .subscribe((response) => {
           console.log(response);
         });
@@ -43,5 +54,23 @@ export class App {
           console.log(response);
         });
     }
+  }
+
+  resetSearchByTitle() {
+    this.titleSearchType = 'text';
+    this.titleSearchQuery = '';
+    this.titleYear = null;
+    this.titleType = 'all';
+    this.seasonNumber = null;
+  }
+
+  searchByTitleChanged() {
+    return (
+      this.titleSearchType !== 'text' ||
+      this.titleSearchQuery !== '' ||
+      this.titleYear !== null ||
+      this.titleType !== 'all' ||
+      this.seasonNumber !== null
+    );
   }
 }

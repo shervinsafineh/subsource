@@ -14,57 +14,77 @@
     </div>
 
     <hr />
-    @if(searchType === 'title'){
-    <div class="search-by-title">
-      <p-selectbutton [options]="titleSearchOptions" [(ngModel)]="titleSearchType"></p-selectbutton>
 
-      <div class="clearable-field">
-        <p-iconfield
-          ><p-inputicon class="pi pi-search" /><input
-            type="text"
-            pInputText
-            [(ngModel)]="titleSearchQuery"
-            [placeholder]="'Enter ' + (titleSearchType === 'text' ? 'name' : 'IMDb ID/link') + ' *'"
-            [required]="true"
-          />
-        </p-iconfield>
+    <div class="second-col">
+      @if(searchType === 'title'){
+      <div class="search-by-title">
+        <p-selectbutton
+          [options]="titleSearchOptions"
+          [(ngModel)]="titleSearchType"
+        ></p-selectbutton>
 
-        @if(titleSearchQuery){<i class="pi pi-times clear-btn" (click)="titleSearchQuery = ''"></i>}
+        <div class="clearable-field">
+          <p-iconfield
+            ><p-inputicon class="pi pi-search" /><input
+              type="text"
+              pInputText
+              [(ngModel)]="titleSearchQuery"
+              [placeholder]="
+                'Enter ' + (titleSearchType === 'text' ? 'name' : 'IMDb ID/link') + ' *'
+              "
+              [required]="true"
+            />
+          </p-iconfield>
+
+          @if(titleSearchQuery){<i class="pi pi-times clear-btn" (click)="titleSearchQuery = ''"></i
+          >}
+        </div>
+
+        <p-inputnumber
+          [(ngModel)]="titleYear"
+          [placeholder]="'Year'"
+          [showButtons]="true"
+          [showClear]="true"
+          [format]="false"
+        />
+
+        <p-select [(ngModel)]="titleType" [options]="titleTypeOptions"></p-select>
+
+        @if(titleType !=='movie'){
+        <p-inputnumber
+          [(ngModel)]="seasonNumber"
+          [placeholder]="'Season Number'"
+          [showButtons]="true"
+          [showClear]="true"
+          [format]="false"
+          [style]="{ marginLeft: '1px' }"
+        />
+        }
+
+        <div class="search-btns">
+          <p-button
+            label="Search"
+            (onClick)="searchByTitle()"
+            [disabled]="
+              (titleSearchType === 'text' && !titleSearchQuery) ||
+              (titleSearchType === 'imdb' && !titleSearchQuery.includes('tt'))
+            "
+            [style]="{ marginLeft: '1px' }"
+          ></p-button>
+
+          <p-button
+            label="Reset"
+            severity="danger"
+            (onClick)="resetSearchByTitle()"
+            [disabled]="!searchByTitleChanged()"
+            [style]="{ marginLeft: '1px' }"
+          ></p-button>
+        </div>
       </div>
 
-      <p-inputnumber
-        [(ngModel)]="titleYear"
-        [placeholder]="'Year'"
-        [showButtons]="true"
-        [showClear]="true"
-        [format]="false"
-      />
-
-      <p-select [(ngModel)]="titleType" [options]="titleTypeOptions"></p-select>
-
-      @if(titleType !=='movie'){
-      <p-inputnumber
-        [(ngModel)]="seasonNumber"
-        [placeholder]="'Season Number'"
-        [showButtons]="true"
-        [showClear]="true"
-        [format]="false"
-        [style]="{ marginLeft: '1px' }"
-      />
-      }
-
-      <p-button
-        label="Search"
-        (onClick)="searchByTitle()"
-        [disabled]="
-          (titleSearchType === 'text' && !titleSearchQuery) ||
-          (titleSearchType === 'imdb' && !titleSearchQuery.includes('tt'))
-        "
-        [style]="{ marginLeft: '1px' }"
-      ></p-button>
+      } @else {}
     </div>
 
     <hr />
-    }
   </div>
 </div>
