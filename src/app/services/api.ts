@@ -8,7 +8,7 @@ import { Secrets } from '../other/secrets';
 export class Api {
   constructor(private http: HttpClient) {}
 
-  baseUrl = 'https://api.subsource.net/api/v1';
+  baseUrl = '/api/v1';
   headers = new HttpHeaders({ 'X-API-Key': Secrets.apiKey });
 
   searchTitle(

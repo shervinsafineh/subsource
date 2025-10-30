@@ -1,0 +1,88 @@
+:host {
+  .p-inputicon,
+  ::ng-deep.p-icon {
+    background-color: transparent;
+  }
+
+  ::ng-deep.p-button-label,
+  ::ng-deep.p-togglebutton-label,
+  ::ng-deep.p-select-option > span {
+    background-color: transparent;
+  }
+
+  ::ng-deep.p-button-label {
+    color: #212529;
+  }
+
+  ::ng-deep.p-inputnumber-input {
+    width: 246px;
+  }
+}
+
+.main {
+  margin: 10px;
+  justify-self: center;
+  width: 100%;
+}
+
+.flex-main {
+  display: flex;
+  align-items: flex-start;
+  margin: 10px;
+  justify-self: center;
+}
+
+.logo {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.search-type {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+}
+
+.radio-div {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+
+  label {
+    cursor: pointer;
+  }
+}
+
+hr {
+  height: 350px;
+  margin-left: 20px;
+  margin-right: 20px;
+  opacity: 0.1;
+}
+
+.search-by-title {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.clearable-field {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.clearable-field input {
+  padding-right: 30px;
+}
+
+.clear-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  cursor: pointer;
+}

@@ -1,0 +1,7 @@
+{
+  "/api": {
+    "target": "https://api.subsource.net",
+    "secure": false,
+    "changeOrigin": true
+  }
+}
