@@ -46,10 +46,6 @@ export class App {
       )
       .subscribe((response) => {
         this.resultTitles = response.data;
-
-        for (const title of this.resultTitles) {
-          title.selected = false;
-        }
       });
   }
 
